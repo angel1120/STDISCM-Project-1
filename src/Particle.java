@@ -17,11 +17,13 @@ class Particle {
         x += dx;
         y += dy;
 
-        // Bounce off the walls
+        // Bounce off the canvas
         if (x < 0 || x > width)
             angle = 180 - angle;
         if (y < 0 || y > height)
             angle = -angle;
+
+        // bounce off the walls
     }
 
     public float getX() {

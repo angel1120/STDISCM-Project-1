@@ -25,7 +25,8 @@ public class ParticleSimulator extends JPanel implements ActionListener {
         frameCount = 0;
         lastFpsUpdateTime = System.currentTimeMillis();
 
-        Timer timer = new Timer(1000 / 60, this); // Adjust frame rate to 60 fps
+        // Adjust frame rate to 60 fps
+        Timer timer = new Timer(1000 / 60, this);
         timer.start();
 
         Timer fpsTimer = new Timer(FPS_UPDATE_INTERVAL, new ActionListener() {
@@ -41,7 +42,7 @@ public class ParticleSimulator extends JPanel implements ActionListener {
 
         JFrame mainFrame = new JFrame("Particle Simulator");
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        mainFrame.setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
+        mainFrame.setSize(WINDOW_WIDTH+30, WINDOW_HEIGHT+50);
         mainFrame.setResizable(false);
         mainFrame.add(this);
         mainFrame.setVisible(true);
@@ -52,15 +53,14 @@ public class ParticleSimulator extends JPanel implements ActionListener {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
+
+        // Particle
         for (Particle particle : particles) {
             g.setColor(Color.BLACK);
-            // Flip y
-//            int x = (int) particle.getX();
-//            int y = WINDOW_HEIGHT - (int) particle.getY();
-//            g.fillOval(x - PARTICLE_RADIUS, y - PARTICLE_RADIUS, 2 * PARTICLE_RADIUS, 2 * PARTICLE_RADIUS);
             g.fillOval((int) particle.getX(), (int) particle.getY(), 2 * PARTICLE_RADIUS, 2 * PARTICLE_RADIUS);
         }
-        // Display particle count and fps
+
+        // Particle count and fps
         g.setColor(Color.BLACK);
         g.drawString("Particles: " + particleCount, 10, 20);
         g.drawString("FPS: " + fps, 10, 40);
@@ -69,7 +69,7 @@ public class ParticleSimulator extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         for (Particle particle : particles) {
-            particle.update(getWidth(), getHeight());
+            particle.update(WINDOW_WIDTH, WINDOW_HEIGHT);
         }
         frameCount++;
         repaint();
