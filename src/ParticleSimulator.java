@@ -76,7 +76,7 @@ public class ParticleSimulator extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         for (Particle particle : particles) {
-            particle.update(WINDOW_WIDTH, WINDOW_HEIGHT);
+            particle.update(WINDOW_WIDTH, WINDOW_HEIGHT, walls);
         }
         frameCount++;
         repaint();
@@ -228,7 +228,6 @@ public class ParticleSimulator extends JPanel implements ActionListener {
                 }
             }
         });
-
 
         addFeaturesFrame.add(panel);
         addFeaturesFrame.setVisible(true);
