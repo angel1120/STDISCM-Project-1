@@ -4,7 +4,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 public class ParticleSimulator extends JPanel implements ActionListener {
     private static final int WINDOW_WIDTH = 1280;
@@ -13,6 +12,7 @@ public class ParticleSimulator extends JPanel implements ActionListener {
     private static final int FPS_UPDATE_INTERVAL = 1000; // Update fps every second
 
     private List<Particle> particles;
+    private List<Wall> walls;
     private int particleCount;
     private int fps;
     private int frameCount;
@@ -20,6 +20,7 @@ public class ParticleSimulator extends JPanel implements ActionListener {
 
     public ParticleSimulator() {
         particles = new ArrayList<>();
+        walls = new ArrayList<>();
         particleCount = 0;
         fps = 0;
         frameCount = 0;
@@ -47,7 +48,7 @@ public class ParticleSimulator extends JPanel implements ActionListener {
         mainFrame.add(this);
         mainFrame.setVisible(true);
 
-        addParticle();
+        addFeatures();
     }
 
     @Override
@@ -58,6 +59,12 @@ public class ParticleSimulator extends JPanel implements ActionListener {
         for (Particle particle : particles) {
             g.setColor(Color.BLACK);
             g.fillOval((int) particle.getX(), (int) particle.getY(), 2 * PARTICLE_RADIUS, 2 * PARTICLE_RADIUS);
+        }
+
+        // Wall
+        for (Wall wall : walls) {
+            g.setColor(Color.BLUE);
+            g.drawLine((int) wall.getX1(), (int) wall.getY1(), (int) wall.getX2(), (int) wall.getY2());
         }
 
         // Particle count and fps
@@ -75,19 +82,25 @@ public class ParticleSimulator extends JPanel implements ActionListener {
         repaint();
     }
 
-    private void addParticle() {
-        JFrame addParticleFrame = new JFrame("Add Particle");
-        addParticleFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        addParticleFrame.setSize(500, 150);
-        addParticleFrame.setResizable(false);
+    private void addFeatures() {
+        JFrame addFeaturesFrame = new JFrame("Add Particle/Wall");
+        addFeaturesFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        addFeaturesFrame.setSize(500, 500);
+        addFeaturesFrame.setResizable(false);
 
         JPanel panel = new JPanel(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.anchor = GridBagConstraints.WEST;
 
-        JLabel xLabel = new JLabel("X Position:");
+        JLabel addParticleLabel = new JLabel("Particle");
+        addParticleLabel.setFont(new Font("Arial", Font.BOLD, 16));
         gbc.gridx = 0;
         gbc.gridy = 0;
+        panel.add(addParticleLabel, gbc);
+
+        JLabel xLabel = new JLabel("X Position:");
+        gbc.gridx = 0;
+        gbc.gridy = 1;
         panel.add(xLabel, gbc);
 
         JTextField xField = new JTextField(10);
@@ -96,7 +109,7 @@ public class ParticleSimulator extends JPanel implements ActionListener {
 
         JLabel yLabel = new JLabel("Y Position:");
         gbc.gridx = 0;
-        gbc.gridy = 1;
+        gbc.gridy = 2;
         panel.add(yLabel, gbc);
 
         JTextField yField = new JTextField(10);
@@ -105,29 +118,29 @@ public class ParticleSimulator extends JPanel implements ActionListener {
 
         JLabel angleLabel = new JLabel("Initial Angle (degrees): ");
         gbc.gridx = 0;
-        gbc.gridy = 2;
+        gbc.gridy = 3;
         panel.add(angleLabel, gbc);
 
         JTextField angleField = new JTextField(10);
         gbc.gridx = 1;
         panel.add(angleField, gbc);
 
-        JLabel velocityLabel = new JLabel("Initial Velocity (pixels/second):");
+        JLabel velocityLabel = new JLabel("Initial Velocity (pixels/second): ");
         gbc.gridx = 0;
-        gbc.gridy = 3;
+        gbc.gridy = 4;
         panel.add(velocityLabel, gbc);
 
         JTextField velocityField = new JTextField(10);
         gbc.gridx = 1;
         panel.add(velocityField, gbc);
 
-        JButton addButton = new JButton("Add Particle");
+        JButton addParticleButton = new JButton("Add Particle");
         gbc.gridx = 0;
-        gbc.gridy = 4;
+        gbc.gridy = 5;
         gbc.gridwidth = 2;
-        panel.add(addButton, gbc);
+        panel.add(addParticleButton, gbc);
 
-        addButton.addActionListener(new ActionListener() {
+        addParticleButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
@@ -150,9 +163,76 @@ public class ParticleSimulator extends JPanel implements ActionListener {
             }
         });
 
-        addParticleFrame.add(panel);
-        addParticleFrame.setVisible(true);
-        addParticleFrame.setLocationRelativeTo(null); // Center the frame on screen
+        gbc.gridy++;
+        panel.add(Box.createVerticalStrut(20), gbc);
+
+        JLabel addWallLabel = new JLabel("Wall");
+        addWallLabel.setFont(new Font("Arial", Font.BOLD, 16));
+        gbc.gridx = 0;
+        gbc.gridy = 7;
+        panel.add(addWallLabel, gbc);
+
+        JLabel x1Label = new JLabel("X1:");
+        gbc.gridx = 0;
+        gbc.gridy = 8;
+        panel.add(x1Label, gbc);
+
+        JTextField x1Field = new JTextField(10);
+        gbc.gridx = 1;
+        panel.add(x1Field, gbc);
+
+        JLabel y1Label = new JLabel("Y1:");
+        gbc.gridx = 0;
+        gbc.gridy = 9;
+        panel.add(y1Label, gbc);
+
+        JTextField y1Field = new JTextField(10);
+        gbc.gridx = 1;
+        panel.add(y1Field, gbc);
+
+        JLabel x2Label = new JLabel("X2:");
+        gbc.gridx = 0;
+        gbc.gridy = 10;
+        panel.add(x2Label, gbc);
+
+        JTextField x2Field = new JTextField(10);
+        gbc.gridx = 1;
+        panel.add(x2Field, gbc);
+
+        JLabel y2Label = new JLabel("Y2:");
+        gbc.gridx = 0;
+        gbc.gridy = 11;
+        panel.add(y2Label, gbc);
+
+        JTextField y2Field = new JTextField(10);
+        gbc.gridx = 1;
+        panel.add(y2Field, gbc);
+
+        JButton addWallButton = new JButton("Add Wall");
+        gbc.gridx = 0;
+        gbc.gridy = 12;
+        gbc.gridwidth = 2;
+        panel.add(addWallButton, gbc);
+
+        addWallButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    float x1 = Float.parseFloat(x1Field.getText());
+                    float y1 = Float.parseFloat(y1Field.getText());
+                    float x2 = Float.parseFloat(x2Field.getText());
+                    float y2 = Float.parseFloat(y2Field.getText());
+                    walls.add(new Wall(x1, y1, x2, y2));
+                } catch (NumberFormatException ex) {
+                    JOptionPane.showMessageDialog(null, "Invalid input. Please enter numeric values.");
+                }
+            }
+        });
+
+
+        addFeaturesFrame.add(panel);
+        addFeaturesFrame.setVisible(true);
+        addFeaturesFrame.setLocationRelativeTo(null); // Center the frame on screen
     }
 
     public static void main(String[] args) {
