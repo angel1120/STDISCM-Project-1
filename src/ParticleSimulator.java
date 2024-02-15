@@ -34,6 +34,7 @@ public class ParticleSimulator extends JPanel implements ActionListener {
         // Adjust frame rate to 60 fps
         Timer timer = new Timer(1000 / 60, this);
         timer.start();
+        timer.setCoalesce(true);
 
         Timer fpsTimer = new Timer(FPS_UPDATE_INTERVAL, e -> {
             long currentTime = System.currentTimeMillis();
@@ -75,11 +76,11 @@ public class ParticleSimulator extends JPanel implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        executor.execute(() -> {
+//        executor.execute(() -> {
             for (Particle particle : particles) {
                 particle.update(WINDOW_WIDTH, WINDOW_HEIGHT, walls);
             }
-        });
+//        });
         frameCount++;
         repaint();
     }
@@ -87,7 +88,7 @@ public class ParticleSimulator extends JPanel implements ActionListener {
     private void addFeatures() {
         JFrame addFeaturesFrame = new JFrame("Add Particle/Wall");
         addFeaturesFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        addFeaturesFrame.setSize(500, 500);
+        addFeaturesFrame.setSize(500, 700);
         addFeaturesFrame.setResizable(false);
 
         JPanel panel = new JPanel(new GridBagLayout());
@@ -534,7 +535,7 @@ public class ParticleSimulator extends JPanel implements ActionListener {
 
         addFeaturesFrame.add(panel);
         addFeaturesFrame.setVisible(true);
-        addFeaturesFrame.setLocationRelativeTo(null); // Center the frame on screen
+        addFeaturesFrame.setLocationRelativeTo(null);
     }
 
     public static void main(String[] args) {

@@ -2,7 +2,7 @@ import java.util.List;
 
 class Particle {
     private float x, y;
-    private float angle; // Angle in degrees
+    private float angle;
     private float velocity;
 
     public Particle(float x, float y, float angle, float velocity) {
@@ -34,35 +34,25 @@ class Particle {
 
             // Check if the particle intersects with the wall segment
             if (isIntersecting(x, y, x + dx, y + dy, x1, y1, x2, y2)) {
-                // Calculate the angle of the wall
                 float wallAngle = (float) Math.atan2(y2 - y1, x2 - x1);
 
-                // Calculate the angle of incidence of the particle
                 float angleIncidence = (float) Math.atan2(dy, dx);
-
-                // Calculate the angle difference between the wall and the particle's trajectory
                 float angleDiff = angleIncidence - wallAngle;
-
-                // Reflect the angle of incidence over the normal to find the angle of reflection
                 float angleReflection = angleIncidence - 2 * angleDiff;
 
-                // Update the particle's angle
                 angle = (float) Math.toDegrees(angleReflection);
 
-                // Exit the loop as the particle can only collide with one wall at a time
                 break;
             }
         }
     }
 
     private boolean isIntersecting(float x1, float y1, float x2, float y2, float x3, float y3, float x4, float y4) {
-        // Calculate the orientation of three points
         float orientation1 = orientation(x1, y1, x2, y2, x3, y3);
         float orientation2 = orientation(x1, y1, x2, y2, x4, y4);
         float orientation3 = orientation(x3, y3, x4, y4, x1, y1);
         float orientation4 = orientation(x3, y3, x4, y4, x2, y2);
 
-        // If the orientations of all points are different, then the line segments intersect
         return (orientation1 != orientation2 && orientation3 != orientation4);
     }
 
