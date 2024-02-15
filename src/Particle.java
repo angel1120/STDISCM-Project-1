@@ -34,9 +34,6 @@ class Particle {
 
             // Check if the particle intersects with the wall segment
             if (isIntersecting(x, y, x + dx, y + dy, x1, y1, x2, y2)) {
-                // Calculate the slope of the wall segment
-                float m = (y2 - y1) / (x2 - x1);
-
                 // Calculate the angle of the wall
                 float wallAngle = (float) Math.atan2(y2 - y1, x2 - x1);
 
@@ -58,14 +55,6 @@ class Particle {
         }
     }
 
-    public float getX() {
-        return x;
-    }
-
-    public float getY() {
-        return y;
-    }
-
     private boolean isIntersecting(float x1, float y1, float x2, float y2, float x3, float y3, float x4, float y4) {
         // Calculate the orientation of three points
         float orientation1 = orientation(x1, y1, x2, y2, x3, y3);
@@ -83,4 +72,13 @@ class Particle {
             return 0;  // Collinear
         return (val > 0) ? 1 : 2; // Clockwise or counterclockwise
     }
+
+    public float getX() {
+        return x;
+    }
+
+    public float getY() {
+        return y;
+    }
+
 }
