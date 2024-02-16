@@ -7,7 +7,7 @@ class Particle {
 
     public Particle(float x, float y, float angle, float velocity) {
         this.x = x;
-        this.y = y;
+        this.y = -y + 720;
         this.angle = angle;
         this.velocity = velocity;
     }
@@ -17,7 +17,7 @@ class Particle {
         float dx = (float) (velocity * Math.cos(Math.toRadians(angle)));
         float dy = (float) (velocity * Math.sin(Math.toRadians(angle)));
         x += dx;
-        y += dy;
+        y -= dy;
 
         // Bounce off the canvas
         if (x < 0 || x > width)
