@@ -23,7 +23,7 @@ public class ParticleSimulator extends JPanel implements ActionListener {
     private long lastFpsUpdateTime;
 
     private ExecutorService executor;
-    private final Object particlesLock = new Object(); // Lock object for particles
+    private final Object particlesLock = new Object(); 
 
     public ParticleSimulator() {
         particles = new ArrayList<>();
@@ -32,7 +32,6 @@ public class ParticleSimulator extends JPanel implements ActionListener {
         fps = 0;
         frameCount = 0;
         lastFpsUpdateTime = System.currentTimeMillis();
-    //    executor = Executors.newFixedThreadPool(NUM_THREADS);
 
         // Adjust frame rate to 60 fps
         Timer timer = new Timer(1000 / FPS_RATE, this);
@@ -58,7 +57,6 @@ public class ParticleSimulator extends JPanel implements ActionListener {
 
         executor = Executors.newFixedThreadPool(NUM_THREADS);
 
-        // Create and start the update thread
         Thread updateThread = new Thread(new FeaturesUpdater());
         updateThread.start();
     }
@@ -85,11 +83,7 @@ public class ParticleSimulator extends JPanel implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-//        executor.execute(() -> {
-            for (Particle particle : particles) {
-                particle.update(WINDOW_WIDTH, WINDOW_HEIGHT, walls);
-            }
-//        });
+
         frameCount++;
         repaint();
     }
@@ -868,7 +862,7 @@ public class ParticleSimulator extends JPanel implements ActionListener {
                         remaining = 0;
                     }
 
-                    Thread.sleep((long) remaining); // Update roughly every 60 frames per second
+                    Thread.sleep((long) remaining); 
 
                     nextUpdateTime = nextUpdateTime + updateInterval;
 
