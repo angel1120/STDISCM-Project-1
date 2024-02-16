@@ -12,7 +12,7 @@ public class ParticleSimulator extends JPanel implements ActionListener {
     private static final int WINDOW_HEIGHT = 720;
     private static final int PARTICLE_RADIUS = 2;
     private static final int FPS_UPDATE_INTERVAL = 500; // Update fps every 0.5 seconds
-    private static final int NUM_THREADS = 8; // Number of worker threads for load balancing
+    private static final int NUM_THREADS = 32; // Number of worker threads for load balancing
     private static final int FPS_RATE = 60;
 
     private List<Particle> particles;
@@ -705,7 +705,7 @@ public class ParticleSimulator extends JPanel implements ActionListener {
 
                     int n = Integer.parseInt(countField.getText());
                     if (isPoints[0]) {
-                        velocity = 5;
+                        velocity = Float.parseFloat(velocityPointsField.getText());
                         float x1 = Float.parseFloat(xStartField.getText());
                         float y1 = Float.parseFloat(yStartField.getText());
                         float x2 = Float.parseFloat(xEndField.getText());
@@ -728,9 +728,9 @@ public class ParticleSimulator extends JPanel implements ActionListener {
                             particleCount++;
                         }
                     } else if (isAngles[0]) {
-                        x = 640;
-                        y = 360;
-                        velocity = 5;
+                        x = Float.parseFloat(xAngleField.getText());
+                        y = Float.parseFloat(yAngleField.getText());
+                        velocity = Float.parseFloat(velocityAngleField.getText());
                         float angle1 = Float.parseFloat(angleStartField.getText());
                         float angle2 = Float.parseFloat(angleEndField.getText());
 
@@ -744,9 +744,9 @@ public class ParticleSimulator extends JPanel implements ActionListener {
                             particleCount++;
                         }
                     } else if (isVelocity[0]) {
-                        x = 0;
-                        y = 0;
-                        angle = 45;
+                        x = Float.parseFloat(xVelocityField.getText());
+                        y = Float.parseFloat(yVelocityField.getText());
+                        angle = Float.parseFloat(angleVelocityField.getText());
                         float velocity1 = Float.parseFloat(velocityStartField.getText());
                         float velocity2 = Float.parseFloat(velocityEndField.getText());
 
