@@ -13,6 +13,7 @@ public class ParticleSimulator extends JPanel implements ActionListener {
     private static final int PARTICLE_RADIUS = 2;
     private static final int FPS_UPDATE_INTERVAL = 500; // Update fps every 0.5 seconds
     private static final int NUM_THREADS = 8; // Number of worker threads for load balancing
+    private static final int FPS_RATE = 60;
 
     private List<Particle> particles;
     private List<Wall> walls;
@@ -20,7 +21,9 @@ public class ParticleSimulator extends JPanel implements ActionListener {
     private int fps;
     private int frameCount;
     private long lastFpsUpdateTime;
+
     private ExecutorService executor;
+    private final Object particlesLock = new Object(); // Lock object for particles
 
     public ParticleSimulator() {
         particles = new ArrayList<>();
@@ -29,10 +32,10 @@ public class ParticleSimulator extends JPanel implements ActionListener {
         fps = 0;
         frameCount = 0;
         lastFpsUpdateTime = System.currentTimeMillis();
-        executor = Executors.newFixedThreadPool(NUM_THREADS);
+    //    executor = Executors.newFixedThreadPool(NUM_THREADS);
 
         // Adjust frame rate to 60 fps
-        Timer timer = new Timer(1000 / 60, this);
+        Timer timer = new Timer(1000 / FPS_RATE, this);
         timer.start();
         timer.setCoalesce(true);
 
@@ -52,6 +55,12 @@ public class ParticleSimulator extends JPanel implements ActionListener {
         mainFrame.setVisible(true);
 
         addFeatures();
+
+        executor = Executors.newFixedThreadPool(NUM_THREADS);
+
+        // Create and start the update thread
+        Thread updateThread = new Thread(new FeaturesUpdater());
+        updateThread.start();
     }
 
     @Override
@@ -540,5 +549,41 @@ public class ParticleSimulator extends JPanel implements ActionListener {
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(ParticleSimulator::new);
+    }
+
+    private class FeaturesUpdater implements Runnable {
+        @Override
+        public void run() {
+
+            double updateInterval = 1000000000/FPS_RATE;
+            double nextUpdateTime = System.nanoTime() + updateInterval;
+
+            while (true) {
+                updateFeatures();
+                try {
+                    
+                    double remaining =  (nextUpdateTime - System.nanoTime()) / 1000000;
+
+                    if (remaining < 0){
+                        remaining = 0;
+                    }
+
+                    Thread.sleep((long) remaining); // Update roughly every 60 frames per second
+
+                    nextUpdateTime = nextUpdateTime + updateInterval;
+
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        private void updateFeatures() {
+            synchronized (particlesLock) {
+                for (Particle particle : particles) {
+                    executor.submit(() -> particle.update(WINDOW_WIDTH, WINDOW_HEIGHT, walls));
+                }
+            }
+        }
     }
 }
