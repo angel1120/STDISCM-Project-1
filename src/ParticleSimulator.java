@@ -181,6 +181,17 @@ public class ParticleSimulator extends JPanel implements ActionListener {
         panel.add(yEndField, gbc);
         yEndField.setVisible(false);
 
+        JLabel velocityPointsLabel = new JLabel("Velocity (pixels/second): ");
+        gbc.gridx = 0;
+        gbc.gridy++;
+        panel.add(velocityPointsLabel, gbc);
+        velocityPointsLabel.setVisible(false);
+
+        JTextField velocityPointsField = new JTextField("5", 10);
+        gbc.gridx = 1;
+        panel.add(velocityPointsField, gbc);
+        velocityPointsField.setVisible(false);
+
     // Uniformly spaced particles between start and end angles Θ
         final boolean[] isAngles = {false};
 
@@ -221,6 +232,39 @@ public class ParticleSimulator extends JPanel implements ActionListener {
         gbc.gridx = 1;
         panel.add(angleEndField, gbc);
         angleEndField.setVisible(false);
+
+        JLabel xAngleLabel = new JLabel("X Position: ");
+        gbc.gridx = 0;
+        gbc.gridy++;
+        panel.add(xAngleLabel, gbc);
+        xAngleLabel.setVisible(false);
+
+        JTextField xAngleField = new JTextField("640", 10);
+        gbc.gridx = 1;
+        panel.add(xAngleField, gbc);
+        xAngleField.setVisible(false);
+
+        JLabel yAngleLabel = new JLabel("Y Position: ");
+        gbc.gridx = 0;
+        gbc.gridy++;
+        panel.add(yAngleLabel, gbc);
+        yAngleLabel.setVisible(false);
+
+        JTextField yAngleField = new JTextField("360",10);
+        gbc.gridx = 1;
+        panel.add(yAngleField, gbc);
+        yAngleField.setVisible(false);
+
+        JLabel velocityAngleLabel = new JLabel("Velocity (pixels/second): ");
+        gbc.gridx = 0;
+        gbc.gridy++;
+        panel.add(velocityAngleLabel, gbc);
+        velocityAngleLabel.setVisible(false);
+
+        JTextField velocityAngleField = new JTextField("5",10);
+        gbc.gridx = 1;
+        panel.add(velocityAngleField, gbc);
+        velocityAngleField.setVisible(false);
 
     // Uniform difference in velocity between start and end velocities
         final boolean[] isVelocity = {false};
@@ -263,6 +307,102 @@ public class ParticleSimulator extends JPanel implements ActionListener {
         panel.add(velocityEndField, gbc);
         velocityEndField.setVisible(false);
 
+        JLabel xVelocityLabel = new JLabel("X Position: ");
+        gbc.gridx = 0;
+        gbc.gridy++;
+        panel.add(xVelocityLabel, gbc);
+        xVelocityLabel.setVisible(false);
+
+        JTextField xVelocityField = new JTextField("640", 10);
+        gbc.gridx = 1;
+        panel.add(xVelocityField, gbc);
+        xVelocityField.setVisible(false);
+
+        JLabel yVelocityLabel = new JLabel("Y Position: ");
+        gbc.gridx = 0;
+        gbc.gridy++;
+        panel.add(yVelocityLabel, gbc);
+        yVelocityLabel.setVisible(false);
+
+        JTextField yVelocityField = new JTextField("360",10);
+        gbc.gridx = 1;
+        panel.add(yVelocityField, gbc);
+        yVelocityField.setVisible(false);
+
+        JLabel angleVelocityLabel = new JLabel("Angle (degrees): ");
+        gbc.gridx = 0;
+        gbc.gridy++;
+        panel.add(angleVelocityLabel, gbc);
+        angleVelocityLabel.setVisible(false);
+
+        JTextField angleVelocityField = new JTextField("45",10);
+        gbc.gridx = 1;
+        panel.add(angleVelocityField, gbc);
+        angleVelocityField.setVisible(false);
+
+    // Custom Inputs
+        final boolean[] isCustom = {false};
+
+        JButton customParameters = new JButton("Input custom parameters");
+        customParameters.setPreferredSize(new Dimension(210, startEndPoints.getPreferredSize().height));
+        gbc.gridx = 0;
+        gbc.gridy++;
+        gbc.gridwidth = 2;
+        panel.add(customParameters, gbc);
+
+        JLabel customLabel = new JLabel("<html>Input custom parameters</html>");
+        gbc.gridx = 0;
+        gbc.gridy++;
+        panel.add(customLabel, gbc);
+        customLabel.setVisible(false);
+
+        gbc.gridy++;
+        panel.add(Box.createVerticalStrut(5), gbc);
+
+        JLabel customX = new JLabel("X Position: ");
+        gbc.gridx = 0;
+        gbc.gridy++;
+        panel.add(customX, gbc);
+        customX.setVisible(false);
+
+        JTextField customXField = new JTextField(10);
+        gbc.gridx = 1;
+        panel.add(customXField, gbc);
+        customXField.setVisible(false);
+
+        JLabel customY = new JLabel("Y Position: ");
+        gbc.gridx = 0;
+        gbc.gridy++;
+        panel.add(customY, gbc);
+        customY.setVisible(false);
+
+        JTextField customYField = new JTextField(10);
+        gbc.gridx = 1;
+        panel.add(customYField, gbc);
+        customYField.setVisible(false);
+
+        JLabel customAngle = new JLabel("Angle (degrees): ");
+        gbc.gridx = 0;
+        gbc.gridy++;
+        panel.add(customAngle, gbc);
+        customAngle.setVisible(false);
+
+        JTextField customAngleField = new JTextField(10);
+        gbc.gridx = 1;
+        panel.add(customAngleField, gbc);
+        customAngleField.setVisible(false);
+
+        JLabel customVelocity = new JLabel("Velocity (pixels/second): ");
+        gbc.gridx = 0;
+        gbc.gridy++;
+        panel.add(customVelocity, gbc);
+        customVelocity.setVisible(false);
+
+        JTextField customVelocityField = new JTextField(10);
+        gbc.gridx = 1;
+        panel.add(customVelocityField, gbc);
+        customVelocityField.setVisible(false);
+
         gbc.gridy++;
         panel.add(Box.createVerticalStrut(10), gbc);
 
@@ -283,6 +423,7 @@ public class ParticleSimulator extends JPanel implements ActionListener {
                 isPoints[0] = true;
                 isAngles[0] = false;
                 isVelocity[0] = false;
+                isCustom[0] = false;
 
                 startEndPoints.setVisible(false);
                 pointsLabel.setVisible(true);
@@ -294,6 +435,8 @@ public class ParticleSimulator extends JPanel implements ActionListener {
                 xEndField.setVisible(true);
                 yEndLabel.setVisible(true);
                 yEndField.setVisible(true);
+                velocityPointsLabel.setVisible(true);
+                velocityPointsField.setVisible(true);
 
                 startEndAngles.setVisible(true);
                 anglesLabel.setVisible(false);
@@ -301,6 +444,12 @@ public class ParticleSimulator extends JPanel implements ActionListener {
                 angleStartField.setVisible(false);
                 angleEndLabel.setVisible(false);
                 angleEndField.setVisible(false);
+                xAngleLabel.setVisible(false);
+                xAngleField.setVisible(false);
+                yAngleLabel.setVisible(false);
+                yAngleField.setVisible(false);
+                velocityAngleLabel.setVisible(false);
+                velocityAngleField.setVisible(false);
                 angleStartField.setText("");
                 angleEndField.setText("");
 
@@ -310,8 +459,28 @@ public class ParticleSimulator extends JPanel implements ActionListener {
                 velocityStartField.setVisible(false);
                 velocityEndLabel.setVisible(false);
                 velocityEndField.setVisible(false);
+                xVelocityLabel.setVisible(false);
+                xVelocityField.setVisible(false);
+                yVelocityLabel.setVisible(false);
+                yVelocityField.setVisible(false);
+                angleVelocityField.setVisible(false);
+                angleVelocityLabel.setVisible(false);
                 velocityStartField.setText("");
                 velocityEndField.setText("");
+
+                customParameters.setVisible(true);
+                customLabel.setVisible(false);
+                customX.setVisible(false);
+                customXField.setVisible(false);
+                customY.setVisible(false);
+                customYField.setVisible(false);
+                customAngle.setVisible(false);
+                customAngleField.setVisible(false);
+                customVelocityField.setVisible(false);
+                customXField.setText("");
+                customYField.setText("");
+                customAngleField.setText("");
+                customVelocityField.setText("");
             }
         });
 
@@ -321,6 +490,7 @@ public class ParticleSimulator extends JPanel implements ActionListener {
                 isPoints[0] = false;
                 isAngles[0] = true;
                 isVelocity[0] = false;
+                isCustom[0] = false;
 
                 startEndPoints.setVisible(true);
                 pointsLabel.setVisible(false);
@@ -332,6 +502,8 @@ public class ParticleSimulator extends JPanel implements ActionListener {
                 xEndField.setVisible(false);
                 yEndLabel.setVisible(false);
                 yEndField.setVisible(false);
+                velocityPointsLabel.setVisible(false);
+                velocityPointsField.setVisible(false);
                 xStartField.setText("");
                 yStartField.setText("");
                 xEndField.setText("");
@@ -343,6 +515,12 @@ public class ParticleSimulator extends JPanel implements ActionListener {
                 angleStartField.setVisible(true);
                 angleEndLabel.setVisible(true);
                 angleEndField.setVisible(true);
+                xAngleLabel.setVisible(true);
+                xAngleField.setVisible(true);
+                yAngleLabel.setVisible(true);
+                yAngleField.setVisible(true);
+                velocityAngleLabel.setVisible(true);
+                velocityAngleField.setVisible(true);
 
                 startEndVelocity.setVisible(true);
                 velocityLabel.setVisible(false);
@@ -350,8 +528,28 @@ public class ParticleSimulator extends JPanel implements ActionListener {
                 velocityStartField.setVisible(false);
                 velocityEndLabel.setVisible(false);
                 velocityEndField.setVisible(false);
+                xVelocityLabel.setVisible(false);
+                xVelocityField.setVisible(false);
+                yVelocityLabel.setVisible(false);
+                yVelocityField.setVisible(false);
+                angleVelocityField.setVisible(false);
+                angleVelocityLabel.setVisible(false);
                 velocityStartField.setText("");
                 velocityEndField.setText("");
+
+                customParameters.setVisible(true);
+                customLabel.setVisible(false);
+                customX.setVisible(false);
+                customXField.setVisible(false);
+                customY.setVisible(false);
+                customYField.setVisible(false);
+                customAngle.setVisible(false);
+                customAngleField.setVisible(false);
+                customVelocityField.setVisible(false);
+                customXField.setText("");
+                customYField.setText("");
+                customAngleField.setText("");
+                customVelocityField.setText("");
             }
         });
 
@@ -361,6 +559,7 @@ public class ParticleSimulator extends JPanel implements ActionListener {
                 isPoints[0] = false;
                 isAngles[0] = false;
                 isVelocity[0] = true;
+                isCustom[0] = false;
 
                 startEndPoints.setVisible(true);
                 pointsLabel.setVisible(false);
@@ -372,6 +571,8 @@ public class ParticleSimulator extends JPanel implements ActionListener {
                 xEndField.setVisible(false);
                 yEndLabel.setVisible(false);
                 yEndField.setVisible(false);
+                velocityPointsLabel.setVisible(false);
+                velocityPointsField.setVisible(false);
                 xStartField.setText("");
                 yStartField.setText("");
                 xEndField.setText("");
@@ -383,6 +584,12 @@ public class ParticleSimulator extends JPanel implements ActionListener {
                 angleStartField.setVisible(false);
                 angleEndLabel.setVisible(false);
                 angleEndField.setVisible(false);
+                xAngleLabel.setVisible(false);
+                xAngleField.setVisible(false);
+                yAngleLabel.setVisible(false);
+                yAngleField.setVisible(false);
+                velocityAngleLabel.setVisible(false);
+                velocityAngleField.setVisible(false);
                 angleStartField.setText("");
                 angleEndField.setText("");
 
@@ -392,6 +599,94 @@ public class ParticleSimulator extends JPanel implements ActionListener {
                 velocityStartField.setVisible(true);
                 velocityEndLabel.setVisible(true);
                 velocityEndField.setVisible(true);
+                xVelocityLabel.setVisible(true);
+                xVelocityField.setVisible(true);
+                yVelocityLabel.setVisible(true);
+                yVelocityField.setVisible(true);
+                angleVelocityField.setVisible(true);
+                angleVelocityLabel.setVisible(true);
+
+                customParameters.setVisible(true);
+                customLabel.setVisible(false);
+                customX.setVisible(false);
+                customXField.setVisible(false);
+                customY.setVisible(false);
+                customYField.setVisible(false);
+                customAngle.setVisible(false);
+                customAngleField.setVisible(false);
+                customVelocityField.setVisible(false);
+                customXField.setText("");
+                customYField.setText("");
+                customAngleField.setText("");
+                customVelocityField.setText("");
+            }
+        });
+
+        customParameters.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                isPoints[0] = false;
+                isAngles[0] = false;
+                isVelocity[0] = false;
+                isCustom[0] = true;
+
+                startEndPoints.setVisible(true);
+                pointsLabel.setVisible(false);
+                xStartField.setVisible(false);
+                xStartLabel.setVisible(false);
+                yStartField.setVisible(false);
+                yStartLabel.setVisible(false);
+                xEndLabel.setVisible(false);
+                xEndField.setVisible(false);
+                yEndLabel.setVisible(false);
+                yEndField.setVisible(false);
+                velocityPointsLabel.setVisible(false);
+                velocityPointsField.setVisible(false);
+                xStartField.setText("");
+                yStartField.setText("");
+                xEndField.setText("");
+                yEndField.setText("");
+
+                startEndAngles.setVisible(true);
+                anglesLabel.setVisible(false);
+                angleStartLabel.setVisible(false);
+                angleStartField.setVisible(false);
+                angleEndLabel.setVisible(false);
+                angleEndField.setVisible(false);
+                xAngleLabel.setVisible(false);
+                xAngleField.setVisible(false);
+                yAngleLabel.setVisible(false);
+                yAngleField.setVisible(false);
+                velocityAngleLabel.setVisible(false);
+                velocityAngleField.setVisible(false);
+                angleStartField.setText("");
+                angleEndField.setText("");
+
+                startEndVelocity.setVisible(true);
+                velocityLabel.setVisible(false);
+                velocityStartLabel.setVisible(false);
+                velocityStartField.setVisible(false);
+                velocityEndLabel.setVisible(false);
+                velocityEndField.setVisible(false);
+                xVelocityLabel.setVisible(false);
+                xVelocityField.setVisible(false);
+                yVelocityLabel.setVisible(false);
+                yVelocityField.setVisible(false);
+                angleVelocityField.setVisible(false);
+                angleVelocityLabel.setVisible(false);
+                velocityStartField.setText("");
+                velocityEndField.setText("");
+
+                customParameters.setVisible(false);
+                customLabel.setVisible(true);
+                customX.setVisible(true);
+                customXField.setVisible(true);
+                customY.setVisible(true);
+                customYField.setVisible(true);
+                customAngle.setVisible(true);
+                customAngleField.setVisible(true);
+                customVelocity.setVisible(true);
+                customVelocityField.setVisible(true);
             }
         });
 
@@ -462,13 +757,18 @@ public class ParticleSimulator extends JPanel implements ActionListener {
                             particles.add(new Particle(x, y, angle, velocity1 + i*velocityInc));
                             particleCount++;
                         }
-                    } else {    // default
-                        x = 640;
-                        y = 360;
-                        angle = 90;
-                        velocity = 5;
+                    } else if (isCustom[0]) {
+                        x = Float.parseFloat(customXField.getText());
+                        y = Float.parseFloat(customYField.getText());
+                        angle = Float.parseFloat(customAngleField.getText());
+                        velocity = Float.parseFloat(customVelocityField.getText());
 
-                        particles.add(new Particle(x, y, angle, velocity));
+                        for (int i = 0; i < n; i++) {
+                            particles.add(new Particle(x, y, angle, velocity));
+                            particleCount++;
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Please choose an input batch type and enter numeric values.");
                     }
                 } catch (NumberFormatException ex) {
                     JOptionPane.showMessageDialog(null, "Invalid input. Please enter numeric values.");

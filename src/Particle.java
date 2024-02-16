@@ -21,9 +21,9 @@ class Particle {
 
         // Bounce off the canvas
         if (x < 0 || x > width)
-            angle = 180 - angle;
+            angle = (180 - angle) % 360;
         if (y < 0 || y > height)
-            angle = -angle;
+            angle = (-angle) % 360;
 
         // Bounce off the walls
         for (Wall wall : walls) {
